@@ -1,0 +1,1 @@
+tar -cvpzf /home/jrebort/backup/ubuntu_backup@`date +%Y-%m-%d`.tar.gz --exclude=/proc --exclude=/tmp --exclude=/home --exclude=/lost+found --exclude=/media --exclude=/mnt --exclude=/run --exclude=/home /
