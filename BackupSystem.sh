@@ -19,7 +19,7 @@ function BackupSystem(){
     path=`pwd`
     echo $path
     cd /
-    tar -cvpzf $path/ubuntu_backup@`date +%Y-%m-%d`.tar.gz --exclude=/proc --exclude=/tmp --exclude=/home --exclude=/lost+found --exclude=/media --exclude=/mnt --exclude=/run --exclude=$path/*  / --warning=none 2>/dev/null
+    tar -cvpzf $path/Linux_backup@`date +%Y-%m-%d`.tar.gz --exclude=/proc --exclude=/tmp --exclude=/home --exclude=/lost+found --exclude=/media --exclude=/mnt --exclude=/run --exclude=$path/*  / --warning=none 2>/dev/null
 }
 
 function RestoreSystem(){
