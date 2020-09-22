@@ -8,6 +8,20 @@
 ## How to backup your OS?
   - `cd Linux-System-BackupScript`  
   - `chmod +x ./BackupSystem.sh`  
-  - `su`   (Enter your root password, this need root privilege)  
+    
+  - `su`   (Enter your root password, this need root privilege) 
   - `./BackupSystem.sh`
+    
+  or  
+  - `sudo ./BackupSystem.sh [Option ……] [Backup dir of saving backup file]`
   
+## Usage example
+ I have a dir to save backup files `/home/username/backup`
+ So I ready to backup my full System, just to run  
+ `sudo ./BackupSystem.sh -b ~/backup`
+   
+ I want to restore a newer system from the backup dir, just run
+ `sudo ./BackupSystem.sh -r ~/backup`
+   
+ You want to delet a older system from the backup dir, just run
+ `sudo ./BackupSystem.sh -d ~/backup`
