@@ -24,6 +24,7 @@
  &nbsp; &nbsp; &nbsp;  &nbsp; `sudo bksys -b`
  - You want to **restore** a newer system from the backup dir, just run  
  &nbsp; &nbsp; &nbsp;  &nbsp; `sudo bksys -r`
+ &nbsp; ** Please do not use the computer in the system recovery phase, otherwise the system will crash.**
  - You want to **delete** a older system from the backup dir, just run  
 &nbsp; &nbsp; &nbsp;  &nbsp;  `sudo bksys -d`
  - You want to **browse** the backed up system from the backup dir, just run  
