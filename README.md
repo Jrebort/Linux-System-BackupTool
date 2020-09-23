@@ -36,4 +36,8 @@
 - Simply usage !  
   
 ![avatar](./material/usage.png)  
+
+## Licenses
+  
+![avatar](./material/license.png)  
   
