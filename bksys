@@ -84,7 +84,7 @@ function RestoreSystem(){
     block_size=$(($block_size + 1))
     echo $block_size
     # unpack
-    tar zxvpf $restorepath -C / --warning=none --blocking-factor=$block_size --checkpoint=1 --checkpoint-action='ttyout=unpack %u%    \r' --ignore-failed-read --ignore-command-error 2>/dev/null 
+    tar zxvpf $restorepath -C $2 --warning=none --blocking-factor=$block_size --checkpoint=1 --checkpoint-action='ttyout=unpack %u%    \r' --ignore-failed-read --ignore-command-error 2>/dev/null 
 }
 
 
@@ -230,15 +230,15 @@ function Usage(){
 
 
 
-####################################
-# The following is entry of script #
-####################################
+#####################################
+# The following is entry of program #
+#####################################
 
-while getopts "rbdhl" opt
+while getopts "r:bdhl" opt
 do
     case $opt in
-        r) [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage 
-        RestoreSystem $Bkdir
+        r) [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage
+        RestoreSystem $Bkdir $OPTARG
         ;;
         b) [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage
         echo "Begin backup OS"
