@@ -30,12 +30,55 @@
  &nbsp; &nbsp; &nbsp;  &nbsp; `sudo bksys -l`
 ##  Feature
 - Restore progress bar  
-  
-![avatar](./material/progress_bar.png)  
+`
+  usr/bin/x86_64-linux-gnu-g++  
+  usr/bin/lsb_release  
+  usr/bin/linguist  
+  usr/bin/ppmdist  
+  usr/bin/lzegrep  
+  usr/bin/iasl  
+  unpack 31%  
+`
   
 - Simply usage !  
+`  
+$:~/Public/Linux-System-BackupScript$ bksys  
+Non root user. Please run as root.  
+$:~/Public/Linux-System-BackupScript$ sudo bksys   
+bksys: you must specify some parameter.  
+Try 'bksys -h' for more information.  
   
-![avatar](./material/usage.png)  
+$:~/Public/Linux-System-BackupScript$ sudo bksys -h  
+[Usage]  
+Backup a new OS timestemp  
+	bksys -b backup dir absolute path  
+  
+Remove a older OS in backup dir.  
+	bksys -d backup dir absolute path  
+  
+Restore a newer OS timestemp  
+	bksys -r backup dir absolutepath  
+  
+help info  
+	bksys -h   
+  
+$:~/Public/Linux-System-BackupScript$ sudo bksys -l  
+Backup file:  
+Linux_backup@2020-09-21.tar.gz  
+Linux_backup@2020-09-22.tar.gz  
+Linux_backup@2020-09-23.tar.gz  
+Linux_backup@2020-09-2.tar.gz  
+Linux_backup@2020-09-8.tar.gz  
+$:~/Public/Linux-System-BackupScript$ sudo bksys -d  
+The date be deleted:  
+2020-09-2  
+$:~/Public/Linux-System-BackupScript$ sudo bksys -l  
+Backup file:  
+Linux_backup@2020-09-22.tar.gz  
+Linux_backup@2020-09-23.tar.gz  
+Linux_backup@2020-09-2.tar.gz  
+Linux_backup@2020-09-8.tar.gz  
+`  
 
 ## Licenses
   
