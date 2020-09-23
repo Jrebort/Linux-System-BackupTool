@@ -1,0 +1,261 @@
+#!/bin/bash
+#
+# author:jrebort
+# date:2020/9/22
+#
+# A script about backup operate system
+
+
+# root privilege
+if [ ${UID} -ne 0 ]; then
+    echo -e "\e[1;31mNon root user. Please run as root.\e[0m"
+    exit
+fi
+
+filename=${0##*/}
+
+# enviroment variable
+source /etc/profile
+if [ ! $Bkdir ];then
+   echo -e "\e[1;31mThe backup file storage path is not specified!\e[0m"
+   read -p "storage path:" Bkdir
+   echo -e "# Bkd enviroment set \nexport Bkdir=$Bkdir" >> /etc/profile
+   source /etc/profile
+fi
+
+
+# non-parameter
+[ $# -eq 0 ] && echo -e "$filename: you must specify some parameter.
+Try '$filename -h' for more information.
+"
+
+#####################################################
+# The following are the core function of the script #
+#####################################################
+
+
+#######################################
+# backup files to the backup dir
+# Globals:
+#   None
+# Arguments:
+#   $1  backup dir path. for example "~/backup"
+# Returns:
+#   None
+#######################################
+function BackupSystem(){
+    cd $1
+    path=`pwd`
+    echo $path
+    cd /
+    tar -cvpzf $path/Linux_backup@`date +%Y-%m-%d`.tar.gz --exclude=/proc --exclude=/tmp --exclude=/home --exclude=/lost+found --exclude=/media --exclude=/mnt --exclude=/run --exclude=$path/*  / --warning=none 2>/dev/null
+    # TODO (jrebort): It would be better if the user can customize the list of directories not to be backed up (bug 1)
+    
+}
+
+
+#######################################
+# Restore files from the backup dir
+# Globals:
+#   None
+# Arguments:
+#   $1 backup dir path. for example "~/backup"
+# Returns:
+#   None
+#######################################
+function RestoreSystem(){
+    # get absolute path
+    restorepath=`GetmaxDate $1`
+
+    # if dir no file
+    if [ $? -eq 1 ];then
+        echo -e "\e[1;31mNo files in the backup directory can be restored\e[0m"
+        exit 1
+    fi
+    echo "Ready to Restore: $restorepath"
+    cd /
+
+    # get file size
+    total_size=`ls -al $restorepath| awk '{print $5}'`
+    echo "total_size:$total_size"
+
+    # set progress bar
+    block_size=$(($total_size/16000))
+    block_size=$(($block_size + 1))
+    echo $block_size
+    # unpack
+    tar zxvpf $restorepath -C / --warning=none --blocking-factor=$block_size --checkpoint=1 --checkpoint-action='ttyout=unpack %u%    \r' --ignore-failed-read --ignore-command-error 2>/dev/null 
+}
+
+
+#######################################
+# Remove files from the backup dir
+# Globals:
+#   None
+# Arguments:
+#   $1 backup dir path. for example "~/backup"
+# Returns:
+#   None
+#######################################
+function Backuprm(){    
+    path="$1" 
+    files=$(ls $path)
+    minDate='2049-01-01'
+    for filename in $files
+    do 
+        Date=$(GetDate $filename)
+        minDate=$(CompareminDate $Date $minDate)
+    done
+    for filename in $files
+    do
+        result=$(echo $filename | grep "${minDate}")
+        if [ "$result" != "" ];
+        then
+            echo "The date be deleted:"
+            echo $minDate
+            $(rm $path/$filename)
+            exit 0
+        fi
+    done
+
+    echo -e "\e[1;31m No backup files to be deleted!\e[0m"
+    exit 1
+}
+
+
+
+#######################################
+# lookup files from the backup dir
+# Globals:
+#   None
+# Arguments:
+#   $1 backup dir path. for example "~/backup"
+# Returns:
+#   None
+#######################################
+function lookup(){
+    files=`ls $1`
+    for filename in $files
+    do
+        result=`echo $filename | grep "${Linux}"`
+        if [ "$result" != "" ];then
+            echo -e "\e[1;33m$filename\e[0m"
+        fi
+    done
+}
+
+
+######################################################
+# The following are the utils function of the script #
+######################################################
+
+
+function CompareminDate(){
+    t1=`date -d "$1" +%s`
+    t2=`date -d "$2" +%s`
+     
+    if [ $t1 -gt $t2 ]; then
+        mindata=$2
+    else
+        mindata=$1
+    fi
+
+    echo $mindata
+}
+
+
+function ComparemaxDate(){
+    t1=`date -d "$1" +%s`
+    t2=`date -d "$2" +%s`
+     
+    if [ $t1 -gt $t2 ]; then
+        maxdata=$1
+    else
+        maxdata=$2
+    fi
+
+    echo $maxdata
+}
+
+
+function GetDate(){
+    string=$1 
+    tmp=${string##*@}
+    date=${tmp%%.tar.gz}
+    echo $date
+}
+
+
+function GetmaxDate(){    
+    path="$1" 
+    files=$(ls $path)
+    maxDate='1999-01-01'
+    for filename in $files
+    do 
+        Date=$(GetDate $filename)
+        maxDate=$(ComparemaxDate $Date $maxDate)
+    done
+    for filename in $files
+    do
+        result=$(echo $filename | grep "${maxDate}")
+        if [ "$result" != "" ];
+        then
+            echo "$path/$filename"
+            exit 0
+        fi
+    done
+    
+    exit 1
+}
+
+
+function Usage(){
+    echo \[Usage\]
+    echo  Backup a new OS timestemp
+    echo -e "\t$filename -b backup dir absolute path"
+    echo 
+    echo  Remove a older OS in backup dir.
+    echo -e "\t$filename -d backup dir absolute path"
+    echo
+    echo  Restore a newer OS timestemp
+    echo -e "\t$filename -r backup dir absolute path"
+    echo
+    echo  help info
+    echo -e "\t$filename -h"
+    echo
+
+    exit
+}
+
+
+
+
+####################################
+# The following is entry of script #
+####################################
+
+while getopts "rbdhl" opt
+do
+    case $opt in
+        r) [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage 
+        RestoreSystem $Bkdir
+        ;;
+        b) [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage
+        echo "Begin backup OS"
+        BackupSystem $Bkdir
+        ;;
+        d) [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage
+        Backuprm $Bkdir
+        ;;
+        l) [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage
+        echo -e "\e[1;32mBackup file:\e[0m"
+        lookup $Bkdir
+        ;;
+        h)
+        Usage 
+        ;;
+        ?)
+        echo "unknow parameter" && Usage
+        exit 1
+    esac
+done
