@@ -14,11 +14,14 @@
   
 ## Usage example
 
- You want to delet a older system from the backup dir, just run   
+ You want to backup current system to the backup dir, just run   
  `sudo bksys -b`
    
  You want to restore a newer system from the backup dir, just run  
  `sudo bksys -r`
    
- You want to delet a older system from the backup dir, just run  
+ You want to delete a older system from the backup dir, just run  
  `sudo bksys -d`
+ 
+ You want to browse the backed up system from the backup dir, just run  
+ `sudo bksys -l`
