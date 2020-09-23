@@ -1,9 +1,15 @@
 
 # Bksys - A system back up tools
-  This is a Shell Script about Linux System.  
+  This is a System backup tool about Linux System.  
   I am user of ubuntu OS and I don\`t like dejagnu to backup my system.  
   Because I cannot use it to restore my system when I cannot access the graphical interface.  
-  So this script came into being!  
+  So this script came into being!
+  
+  ### Advantage
+  Small - Based on tar packaging and compression, the backup file is small.
+  Easy to manage - Manage all backup files with a few simple commands.
+  Command line - Command line interface, very useful when the graphical interface crashes.
+  Online recovery - No need for livecd, No need to shut down!
 
 ## How to backup your OS?
   - `cd Linux-System-BackupScript`  
@@ -24,6 +30,10 @@
  &nbsp; &nbsp; &nbsp;  &nbsp; `sudo bksys -l`
 ##  Feature
 - Restore progress bar  
+  
 ![avatar](./material/progress_bar.png)  
+  
 - Simply usage !  
+  
 ![avatar](./material/usage.png)  
+  
