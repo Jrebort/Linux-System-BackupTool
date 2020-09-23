@@ -6,10 +6,10 @@
   So this script came into being!
   
   ### Advantage
-  Small - Based on tar packaging and compression, the backup file is small.
-  Easy to manage - Manage all backup files with a few simple commands.
-  Command line - Command line interface, very useful when the graphical interface crashes.
-  Online recovery - No need for livecd, No need to shut down!
+  **Small** - Based on tar packaging and compression, the backup file is small.  
+  **Easy to manage** - Manage all backup files with a few simple commands.  
+  **Command line** - Command line interface, very useful when the graphical interface crashes.  
+  **Online recovery** - No need for livecd, No need to shut down!  
 
 ## How to backup your OS?
   - `cd Linux-System-BackupScript`  
