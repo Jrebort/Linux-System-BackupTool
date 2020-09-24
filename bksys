@@ -297,7 +297,7 @@ function Usage(){
 
 
 
-temp=`getopt -o t:br::ld:: --long help -n "$0" -- "$@"`
+temp=`getopt -o t:br::ld::v --long help -n "$0" -- "$@"`
 
 if [ $? != 0 ] ; then
   echo "Try '$filename --help' for more information."
@@ -347,7 +347,13 @@ do
         --help)
             Usage
             ;;
+        -v|-V)
+            echo "$filename version `cat /usr/share/bksys/version`"
+            exit 0
+            ;;
         *)
+            # echo "unknow parameter $1" 
+            # echo "Try '$filename --help' for more information."
             exit 1
             ;;    
      esac

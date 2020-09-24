@@ -14,6 +14,8 @@ fi
 
 # install exec file
 chmod +x ./bksys
+mkdir /usr/share/bksys
+cp ./version /usr/share/bksys/version
 cp ./bksys /usr/bin/bksys
 
 # test enviroment variable
