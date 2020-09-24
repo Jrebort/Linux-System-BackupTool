@@ -23,8 +23,44 @@
 - You want to **backup** current system to the backup dir,  just run   
  &nbsp; &nbsp; &nbsp;  &nbsp; `sudo bksys -b`  
  - You want to **restore** a newer system from the backup dir, just run  
- &nbsp; &nbsp; &nbsp;  &nbsp; `sudo bksys -r /`  
- &nbsp; **Please do not use the computer in the system recovery phase, otherwise the system will crash.**
+ &nbsp; &nbsp; &nbsp;  &nbsp; `sudo bksys -r`  
+ &nbsp; **Please do not use the computer in the system recovery phase, otherwise the system will crash.**  
+ if you want to delete a specific date, run  
+ ```
+$ sudo ./bksys -t 2020-09-23 -r                              
+No recovery path specified, default path is /
+Ready to Restore: /home/yangshuang/backup/Linux_backup@2020-09-23.tar.gz
+total_size:3700532378
+231284
+./pack 1%    
+swapfile
+bin/                                                                                                                 
+bin/dd
+bin/ntfsrecover
+bin/systemd-inhibit
+bin/ntfscluster
+bin/ntfsmove
+bin/ntfsinfo
+unpack:3%
+ ```
+ if you want to set recovery path, run  
+ ```
+ $ sudo ./bksys -r/mnt                           
+Recovery path is /mnt
+Ready to Restore: /home/yangshuang/backup/Linux_backup@2020-09-23.tar.gz
+total_size:3700532378
+231284
+./pack 1%    
+swapfile
+bin/                                                                                                                 
+bin/dd
+bin/ntfsrecover
+bin/systemd-inhibit
+bin/ntfscluster
+bin/ntfsmove
+bin/ntfsinfo
+unpack:3%
+ ```
  - You want to **delete** a older system from the backup dir, just run  
 &nbsp; &nbsp; &nbsp;  &nbsp;  `sudo bksys -d`  
 if you want to delete a specific date, run:  
