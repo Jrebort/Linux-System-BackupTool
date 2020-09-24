@@ -27,6 +27,23 @@
  &nbsp; **Please do not use the computer in the system recovery phase, otherwise the system will crash.**
  - You want to **delete** a older system from the backup dir, just run  
 &nbsp; &nbsp; &nbsp;  &nbsp;  `sudo bksys -d`
+if you want to delete a specific date, run:  
+```$ sudo ./bksys -l
+Linux_backup@2020-09-23.tar.gz
+Linux_backup@2020-09-24.tar.gz
+Linux_backup@2020-09-2.tar.gz
+Linux_backup@2020-09-8.tar.gz
+
+$ sudo ./bksys -t 2020-09-2 -d
+The date be deleted:
+2020-09-2
+
+$ sudo ./bksys -l
+Linux_backup@2020-09-23.tar.gz
+Linux_backup@2020-09-24.tar.gz
+Linux_backup@2020-09-8.tar.gz
+
+```
  - You want to **browse** the backed up system from the backup dir, just run  
  &nbsp; &nbsp; &nbsp;  &nbsp; `sudo bksys -l`
 ##  Feature
