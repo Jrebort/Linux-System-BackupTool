@@ -21,6 +21,8 @@ if [ ! $Bkdir ];then
    read -p "storage path:" Bkdir
    echo -e "# Bkd enviroment set \nexport Bkdir=$Bkdir" >> /etc/profile
    source /etc/profile
+else
+    [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage
 fi
 
 
@@ -64,8 +66,17 @@ function BackupSystem(){
 #   None
 #######################################
 function RestoreSystem(){
-    # get absolute path
-    restorepath=`GetmaxDate $1`
+    # the func have 2 method to restore backup file
+    # 1: restore specific file by option t    
+    # 2: default delete older file
+ 
+    # method one
+    if [ $filedate ];then
+        # get absolute path
+        restorepath=$1/Linux_backup@$filedate.tar.gz
+    else
+        restorepath=`GetmaxDate $1`
+    fi
 
     # if dir no file
     if [ $? -eq 1 ];then
@@ -83,6 +94,7 @@ function RestoreSystem(){
     block_size=$(($total_size/16000))
     block_size=$(($block_size + 1))
     echo $block_size
+
     # unpack
     tar zxvpf $restorepath -C $2 --warning=none --blocking-factor=$block_size --checkpoint=1 --checkpoint-action='ttyout=unpack %u%    \r' --ignore-failed-read --ignore-command-error 2>/dev/null 
 }
@@ -97,8 +109,21 @@ function RestoreSystem(){
 # Returns:
 #   None
 #######################################
-function Backuprm(){    
+function Backuprm(){
+    # the func have 2 method to del backup file
+    # 1: delete specific file by option t    
+    # 2: default delete older file
+    
     path="$1" 
+    # method one
+    if [ $filedate ];then
+        echo "The date be deleted:"
+        echo "$filedate"
+        rm $path/Linux_backup@$filedate.tar.gz
+        exit 0
+    fi
+
+    # method two
     files=$(ls $path)
     minDate='2049-01-01'
     for filename in $files
@@ -234,28 +259,90 @@ function Usage(){
 # The following is entry of program #
 #####################################
 
-while getopts "r:bdhl" opt
+
+# Old option process
+# Because it cannot address default parameter, so be deleted.
+
+# while getopts "r:bdhl" opt
+# do
+#     case $opt in
+#         r) [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage
+#         RestoreSystem $Bkdir $OPTARG
+#         ;;
+#         b) [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage
+#         echo "Begin backup OS"
+#         BackupSystem $Bkdir
+#         ;;
+#         d) [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage
+#         Backuprm $Bkdir
+#         ;;
+#         l) [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage
+#         echo -e "\e[1;32mBackup file:\e[0m"
+#         lookup $Bkdir
+#         ;;
+#         h)
+#         Usage 
+#         ;;
+#         ?)
+#         echo "unknow parameter" && Usage
+#         exit 1
+#     esac
+# done
+
+
+
+temp=`getopt -o t:br::ld:: --long help -n "$0" -- "$@"`
+
+if [ $? != 0 ] ; then
+  echo "Try '$filename --help' for more information."
+  exit 1
+fi
+
+eval set -- "$temp"
+while true
 do
-    case $opt in
-        r) [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage
-        RestoreSystem $Bkdir $OPTARG
-        ;;
-        b) [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage
-        echo "Begin backup OS"
-        BackupSystem $Bkdir
-        ;;
-        d) [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage
-        Backuprm $Bkdir
-        ;;
-        l) [ ! -d "$Bkdir" ] && echo -e "\e[1;31mBackup dir is not exist!\e[0m\n" && Usage
-        echo -e "\e[1;32mBackup file:\e[0m"
-        lookup $Bkdir
-        ;;
-        h)
-        Usage 
-        ;;
-        ?)
-        echo "unknow parameter" && Usage
-        exit 1
-    esac
+    case "$1" in
+        -t)
+            filedate=$2
+            shift 2
+            ;;
+        -b)
+            BackupSystem $Bkdir
+            shift
+            ;;
+        -r)
+            case "$2" in
+                "")
+                    echo "No recovery path specified, default path is /"
+                    RestoreSystem $Bkdir /
+                    shift 2
+                    ;;
+                *)
+                    echo "Recovery path is $2"
+                    RestoreSystem $Bkdir $2
+                    shift 2
+                    ;;
+            esac ;;
+         -d)
+            case "$2" in
+                "")
+                    Backuprm $Bkdir
+                    shift 2
+                    ;;
+                *)
+                    Backuprm $Bkdir $2
+                    shift 2
+                    ;;
+            esac ;;
+        -l)
+            lookup $Bkdir
+            shift
+            ;;
+        --help)
+            Usage
+            ;;
+        *)
+            exit 1
+            ;;    
+     esac
 done
