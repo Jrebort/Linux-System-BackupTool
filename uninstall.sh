@@ -12,3 +12,5 @@ if [ ${UID} -ne 0 ]; then
 fi
 
 rm /usr/bin/bksys
+sed -i '$d' /etc/profile
+sed -i '$d' /etc/profile
