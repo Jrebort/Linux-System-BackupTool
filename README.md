@@ -94,7 +94,7 @@ unpack:4%
 - OK, the recovery is complete, you can `reboot` and unplug the USB.
 - Enjoy @-@ !
 ## Uninstall method
-just run:  
+Just run:  
 ```
  chmod +x ./uninstall.sh
  sudo ./uninstall.sh
@@ -133,7 +133,6 @@ Examples:
                                older. If you want to specify a date, see -t usage        
   bksys -t 2020-9-20 -r      # Restore 2020-9-20 backed up system.
 $:~/Public/Linux-System-BackupScript$ sudo bksys -l  
-Backup file:  
 Linux_backup@2020-09-21.tar.gz  
 Linux_backup@2020-09-22.tar.gz  
 Linux_backup@2020-09-23.tar.gz  
