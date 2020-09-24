@@ -90,22 +90,21 @@ $:~/Public/Linux-System-BackupScript$ bksys
 Non root user. Please run as root.
 $:~/Public/Linux-System-BackupScript$ sudo bksys   
 bksys: you must specify some parameter.  
-Try 'bksys -h' for more information.  
+Try 'bksys --help' for more information.  
   
-$:~/Public/Linux-System-BackupScript$ sudo bksys -h  
-[Usage]  
-Backup a new OS timestemp  
-	bksys -b backup dir absolute path  
-  
-Remove a older OS in backup dir.  
-	bksys -d backup dir absolute path  
-  
-Restore a newer OS timestemp  
-	bksys -r backup dir absolutepath  
-  
-help info  
-	bksys -h   
-  
+$:~/Public/Linux-System-BackupScript$ sudo bksys --help
+[Usage]: bksys [OPTOPN...] [PATH]
+bksys is a very simple and easy-to-use Linux system backup tool.
+
+Examples:
+  bksys -rpath               # Restore the system to the location of path.               
+                               the default backup path is /, default restore date        
+                               is newer. If you want to specify a date, see -t usage     
+  bksys -b                   # Backup the current system.  
+  bksys -l                   # Browse backed up systems.   
+  bksys -d                   # Delete backed up systems.The default deleted file is      
+                               older. If you want to specify a date, see -t usage        
+  bksys -t 2020-9-20 -r      # Restore 2020-9-20 backed up system.
 $:~/Public/Linux-System-BackupScript$ sudo bksys -l  
 Backup file:  
 Linux_backup@2020-09-21.tar.gz  
