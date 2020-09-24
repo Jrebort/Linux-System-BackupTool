@@ -65,13 +65,40 @@ unpack:3%
 &nbsp; &nbsp; &nbsp;  &nbsp;  `sudo bksys -d`
  - You want to **browse** the backed up system from the backup dir, just run  
  &nbsp; &nbsp; &nbsp;  &nbsp; `sudo bksys -l`
+ 
+## How to usage the tool in livecd
+- Enter livecd
+- Open a terminal
+- Use `fdisk` to find the disk where your root directory is located. (Suppose it is /dev/sda1)
+- Hang in the original system root directory in /mnt
+```
+$sudo mount /dev/sda1 /mnt
+$sudo /mnt/home/username/Public/Linux-System-BackupScript/install.sh
+The backup file storage path is not specified!
+storage path:/mnt/home/username/backup
+$sudo bksys -t 2020-9-22 -r/mnt
+Ready to Restore: /home/yangshuang/backup/Linux_backup@2020-09-22.tar.gz
+total_size:3700532378
+231284
+./pack 1%    
+swapfile
+bin/                                                                                                                 
+bin/dd
+bin/ntfsrecover
+bin/systemd-inhibit
+bin/ntfscluster
+bin/ntfsmove
+bin/ntfsinfo
+unpack:4%
+```
+- OK, the recovery is complete, you can `reboot` and unplug the USB.
+- Enjoy @-@ !
 ## Uninstall method
 just run:  
 ```
  chmod +x ./uninstall.sh
  sudo ./uninstall.sh
 ```
- 
 ##  Feature
 - Restore progress bar  
 ```
