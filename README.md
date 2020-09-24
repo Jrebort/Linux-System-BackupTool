@@ -24,11 +24,6 @@
  &nbsp; &nbsp; &nbsp;  &nbsp; `sudo bksys -b`  
  - You want to **restore** a newer system from the backup dir, just run  
  &nbsp; &nbsp; &nbsp;  &nbsp; `sudo bksys -r`  
- &nbsp; ** Please do not use the computer in the system recovery phase, otherwise the system will crash.**
- - You want to **delete** a older system from the backup dir, just run  
- &nbsp; &nbsp; &nbsp;  &nbsp; `sudo bksys -r /`  
- &nbsp; **Please do not use the computer in the system recovery phase, otherwise the system will crash.**
- &nbsp; &nbsp; &nbsp;  &nbsp; `sudo bksys -r`  
  &nbsp; **Please do not use the computer in the system recovery phase, otherwise the system will crash.**  
  if you want to delete a specific date, run  
  ```
@@ -66,6 +61,7 @@ bin/ntfsmove
 bin/ntfsinfo
 unpack:3%
  ```
+ - You want to **delete** a older system from the backup dir, just run  
 &nbsp; &nbsp; &nbsp;  &nbsp;  `sudo bksys -d`
  - You want to **browse** the backed up system from the backup dir, just run  
  &nbsp; &nbsp; &nbsp;  &nbsp; `sudo bksys -l`
