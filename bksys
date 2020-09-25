@@ -27,8 +27,7 @@ fi
 
 # non-parameter
 [ $# -eq 0 ] && echo -e "$filename: you must specify some parameter.
-Try '$filename --help' for more information.
-"
+Try '$filename --help' for more information."
 
 #####################################################
 # The following are the core function of the script #
@@ -238,23 +237,41 @@ function Usage(){
     echo  bksys is a very simple and easy-to-use Linux system backup tool.
     echo
     echo Examples:
-    printf "  %-5s %-20s %-60s" $filename -rpath "# Restore the system to the location of path."
+    printf "%-5s %-20s %-60s" $filename -rpath "# Restore the system to the location of path."
     echo
-    printf "  %-5s %-20s %-60s" "" "" "  the default backup path is /, default restore date "
+    printf "%-5s %-20s %-60s" "" "" "  the default backup path is /, default restore date "
     echo
-    printf "  %-5s %-20s %-60s" "" "" "  is newer. If you want to specify a date, see -t usage"
+    printf "%-5s %-20s %-60s" "" "" "  is newer. If you want to specify a date, see -t usage"
     echo 
-    printf "  %-5s %-20s %-30s" $filename -b "# Backup the current system."
+    printf "%-5s %-20s %-30s" $filename -b "# Backup the current system."
     echo
-    printf "  %-5s %-20s %-30s" $filename -l "# Browse backed up systems."
+    printf "%-5s %-20s %-30s" $filename -l "# Browse backed up systems."
     echo
-    printf "  %-5s %-20s %-60s" $filename -d "# Delete backed up systems.The default deleted file is "
+    printf "%-5s %-20s %-60s" $filename -d "# Delete backed up systems.The default deleted file is "
     echo 
-    printf "  %-5s %-20s %-60s" "" "" "  older. If you want to specify a date, see -t usage"
+    printf "%-5s %-20s %-60s" "" "" "  older. If you want to specify a date, see -t usage"
     echo 
-    printf "  %-5s %-20s %-30s" $filename "-t 2020-9-20 -r"  "# Restore 2020-9-20 backed up system."
+    printf "%-5s %-20s %-30s" $filename "-t 2020-9-20 -r"  "# Restore 2020-9-20 backed up system."
     echo
-
+    echo
+    echo
+    echo "Option description:"
+    printf "%-8s %-10s %-30s" " " -b "Backup current system."
+    echo 
+    printf "%-8s %-10s %-30s" " " -r "Restore specific system, need to figure date."
+    echo
+    printf "%-8s %-10s %-30s" " " -d "Delete one system backup file." 
+    echo
+    printf "%-8s %-10s %-30s" " " -l "Browse the current system backed up file." 
+    echo
+    printf "%-8s %-10s %-30s" " " -t "Specify the time about restore or delete option"
+    echo
+    printf "%-8s %-10s %-30s" " " -v "Display the version info." 
+    echo
+    printf "%-8s %-10s %-30s" " " -p "Re-specify the storage path of the backup file." 
+    echo
+    printf "%-8s %-10s %-30s" " " --help "Display the help information."
+    echo 
     exit
 }
 
@@ -297,7 +314,7 @@ function Usage(){
 
 
 
-temp=`getopt -o t:br::ld::v --long help -n "$0" -- "$@"`
+temp=`getopt -o t:br::ld::vp --long help -n "$0" -- "$@"`
 
 if [ $? != 0 ] ; then
   echo "Try '$filename --help' for more information."
@@ -350,6 +367,18 @@ do
         -v|-V)
             echo "$filename version `cat /usr/share/bksys/version`"
             exit 0
+            ;;
+        -p)
+            read -p "storage path:" Bkdir
+            if [ -d $Bkdir ];then
+                sed -i '$d' /etc/profile
+                sed -i '$d' /etc/profile
+                echo -e "# Bkd enviroment set \nexport Bkdir=$Bkdir" >> /etc/profile
+                exit 0
+            else
+                echo The directory is not exist!
+                exit 1
+            fi
             ;;
         *)
             # echo "unknow parameter $1" 
