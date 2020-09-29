@@ -1,1 +1,5 @@
-1.0.0
+1.1.0
+
+Feature:
+    Add rubbish process function
+    That Restore process generate a lot of rubbish file after restore system    file in specific timestemp. So that OS size may be become more and more.    I will update the Tool to address this question!
