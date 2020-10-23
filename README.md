@@ -10,6 +10,8 @@
   **Easy to manage** - Manage all backup files with a few simple commands.  
   **Command line** - Command line interface, very useful when the graphical interface crashes.  
   **Online recovery** - No need for livecd, No need to shut down!  
+  
+  **Please give it a star if you like it, and feel free to contribute code to this repository!**
 
 ## How to backup your OS?
   - `cd Linux-System-BackupScript`  
