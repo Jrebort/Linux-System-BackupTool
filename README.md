@@ -150,6 +150,9 @@ Linux_backup@2020-09-23.tar.gz
 Linux_backup@2020-09-2.tar.gz  
 Linux_backup@2020-09-8.tar.gz  
 ```
+## Join me!
+I plan to improve the performance of this program. If you would like to contribute this code, please contact me.
+e-mail:jrebort@foxmail.com
 
 ## Licenses
   
