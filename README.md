@@ -115,13 +115,13 @@ Just run:
   
 - Simply usage !  
 ```
-$:~/Public/Linux-System-BackupScript$ bksys
+: /Public/Linux−System−BackupScript:~/Public/Linux-System-BackupScript bksys
 Non root user. Please run as root.
-$:~/Public/Linux-System-BackupScript$ sudo bksys   
+: /Public/Linux−System−BackupScript:~/Public/Linux-System-BackupScript sudo bksys   
 bksys: you must specify some parameter.  
 Try 'bksys --help' for more information.  
   
-$:~/Public/Linux-System-BackupScript$ sudo bksys --help
+: /Public/Linux−System−BackupScript:~/Public/Linux-System-BackupScript sudo bksys --help
 [Usage]: bksys [OPTOPN...] [PATH]
 bksys is a very simple and easy-to-use Linux system backup tool.
 
@@ -134,16 +134,16 @@ Examples:
   bksys -d                   # Delete backed up systems.The default deleted file is      
                                older. If you want to specify a date, see -t usage        
   bksys -t 2020-9-20 -r      # Restore 2020-9-20 backed up system.
-$:~/Public/Linux-System-BackupScript$ sudo bksys -l  
+: /Public/Linux−System−BackupScript:~/Public/Linux-System-BackupScript sudo bksys -l  
 Linux_backup@2020-09-21.tar.gz  
 Linux_backup@2020-09-22.tar.gz  
 Linux_backup@2020-09-23.tar.gz  
 Linux_backup@2020-09-2.tar.gz  
 Linux_backup@2020-09-8.tar.gz  
-$:~/Public/Linux-System-BackupScript$ sudo bksys -d  
+: /Public/Linux−System−BackupScript:~/Public/Linux-System-BackupScript sudo bksys -d  
 The date be deleted:  
 2020-09-2  
-$:~/Public/Linux-System-BackupScript$ sudo bksys -l  
+: /Public/Linux−System−BackupScript:~/Public/Linux-System-BackupScript sudo bksys -l  
 Backup file:  
 Linux_backup@2020-09-22.tar.gz  
 Linux_backup@2020-09-23.tar.gz  
@@ -152,8 +152,7 @@ Linux_backup@2020-09-8.tar.gz
 ```
 ## Join me!
 I plan to improve the performance of this program. If you would like to contribute this code, please contact me.
-e-mail:jrebort@foxmail.com
-qq group:684186507
+e-mail:jrebort@outlook.com
 
 ## Licenses
   
